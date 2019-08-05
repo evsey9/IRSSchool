@@ -37,7 +37,7 @@ function turnRight(angle){
 	while(eL() < path){
 		wait(10)
 	}
-	motors(0,0)
+	motors(0, 0)
 }
 
 function turnLeft(angle){
@@ -46,7 +46,7 @@ function turnLeft(angle){
 	while(eL() > path){
 		wait(10)
 	}
-	motors(0,0)
+	motors(0, 0)
 }
 
 function moveBackwards(cm){
