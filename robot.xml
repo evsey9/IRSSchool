@@ -2,7 +2,12 @@
 <root>
     <world>
         <background/>
-        <walls/>
+        <walls>
+            <wall end="300:-300" id="{42712d23-58de-41a4-be82-9dce83468cde}" stroke="#ff000000" begin="-300:-300" stroke-style="none" stroke-width="10" fill="#ff000000"/>
+            <wall end="300:300" id="{bac50686-7670-41aa-8c0d-fe78a5a94721}" stroke="#ff000000" begin="300:-300" stroke-style="none" stroke-width="10" fill="#ff000000"/>
+            <wall end="300:300" id="{0a3a7f61-5918-425c-82b2-96d269c40196}" stroke="#ff000000" begin="-300:300" stroke-style="none" stroke-width="10" fill="#ff000000"/>
+            <wall end="-300:-300" id="{ef1bce9c-98c4-41ec-b64a-7bfa13ca77d1}" stroke="#ff000000" begin="-300:300" stroke-style="none" stroke-width="10" fill="#ff000000"/>
+        </walls>
         <skittles/>
         <balls/>
         <colorFields/>
@@ -10,18 +15,18 @@
         <regions/>
     </world>
     <robots>
-        <robot id="trikKitRobot" direction="0" position="0:0">
+        <robot id="trikKitRobot" position="0:0" direction="0">
             <sensors>
-                <sensor port="A5###input###А5###sensorA5" type="" direction="0" position="0:0"/>
-                <sensor port="A6###input###А6###sensorA6" type="" direction="0" position="0:0"/>
-                <sensor port="A3###input###А3###sensorA3" type="" direction="0" position="0:0"/>
-                <sensor port="A4###input###А4###sensorA4" type="" direction="0" position="0:0"/>
-                <sensor port="A1###input###А1###sensorA1" type="trik::robotModel::parts::TrikInfraredSensor" direction="90" position="45:50"/>
-                <sensor port="A2###input###А2###sensorA2" type="trik::robotModel::parts::TrikInfraredSensor" direction="270" position="45:0"/>
-                <sensor port="D1###input######sensorD1" type="trik::robotModel::parts::TrikSonarSensor" direction="0" position="60:25"/>
+                <sensor port="A5###input###А5###sensorA5" type="" position="0:0" direction="0"/>
+                <sensor port="A2###input###А2###sensorA2" type="trik::robotModel::parts::TrikInfraredSensor" position="44:1" direction="270"/>
+                <sensor port="A1###input###А1###sensorA1" type="trik::robotModel::parts::TrikInfraredSensor" position="44:49" direction="90"/>
+                <sensor port="A4###input###А4###sensorA4" type="" position="0:0" direction="0"/>
+                <sensor port="A3###input###А3###sensorA3" type="" position="0:0" direction="0"/>
+                <sensor port="D1###input######sensorD1" type="trik::robotModel::parts::TrikSonarSensor" position="59:24" direction="0"/>
+                <sensor port="A6###input###А6###sensorA6" type="" position="0:0" direction="0"/>
             </sensors>
-            <startPosition id="{a9a74d24-b64b-403c-a483-929eb301a99c}" direction="0" x="25" y="25"/>
-            <wheels left="M4###output###М4###" right="M3###output###М3###"/>
+            <startPosition id="{fcbbcc54-5a2c-41cb-a2dc-6101a672f209}" y="25" x="25" direction="0"/>
+            <wheels right="M3###output###М3###" left="M4###output###М4###"/>
         </robot>
     </robots>
 </root>
