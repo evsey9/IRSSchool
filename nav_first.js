@@ -36,19 +36,12 @@ function motors(vl, vr) {
 
 //base functions. Try not to use in main code
 
-function turnRight(angle) {
-	path = eL() + (robot.track * angle) / (robot.d * 360) * robot.cpr
-	motors(40, -40)
-	while (eL() < path) {
-		wait(10)
-	}
-	motors(0, 0)
-}
-
-function turnLeft(angle) {
-	path = eL() - (robot.track * angle) / (robot.d * 360) * robot.cpr
-	motors(-40, 40)
-	while (eL() > path) {
+function turnEnc(angle) {
+	var sgn = sign(angle)
+	var eN = sgn == 1 ? eL : eR
+	var path = eN() + (robot.track * abs(angle)) / (robot.d * 360) * robot.cpr
+	motors(40 * sgn, -40 * sgn)
+	while (eN() < path) {
 		wait(10)
 	}
 	motors(0, 0)
@@ -78,13 +71,13 @@ function moveStraight(cm) {
 
 function placeTurnRight() {
 	moveStraight(robot.track / 2)
-	turnRight(90)
+	turnEnc(90)
 	moveBackwards(robot.track / 2)
 }
 
 function placeTurnLeft() {
 	moveStraight(robot.track / 2)
-	turnLeft(90)
+	turnEnc(-90)
 	moveBackwards(robot.track / 2)
 }
 
@@ -93,8 +86,8 @@ function placeTurnLeft() {
 var main = function () {
 	__interpretation_started_timestamp__ = Date.now()
 	moveStraight(52.5)
-	turnRight(90)
-	turnLeft(90)
+	turnEnc(90)
+	turnEnc(-90)
 	moveBackwards(52.5)
 	placeTurnRight()
 	placeTurnLeft()
