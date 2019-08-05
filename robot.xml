@@ -7,6 +7,15 @@
             <wall end="300:300" id="{bac50686-7670-41aa-8c0d-fe78a5a94721}" stroke="#ff000000" begin="300:-300" stroke-style="none" stroke-width="10" fill="#ff000000"/>
             <wall end="300:300" id="{0a3a7f61-5918-425c-82b2-96d269c40196}" stroke="#ff000000" begin="-300:300" stroke-style="none" stroke-width="10" fill="#ff000000"/>
             <wall end="-300:-300" id="{ef1bce9c-98c4-41ec-b64a-7bfa13ca77d1}" stroke="#ff000000" begin="-300:300" stroke-style="none" stroke-width="10" fill="#ff000000"/>
+            <wall end="-150:-150" id="{7f836692-4161-46e0-a8cd-4e6eac15af87}" stroke="#ff000000" begin="-150:-300" stroke-style="none" stroke-width="10" fill="#ff000000"/>
+            <wall end="150:-150" id="{ef0cebfc-fadf-42e0-9933-d833bd4cf941}" stroke="#ff000000" begin="0:-150" stroke-style="none" stroke-width="10" fill="#ff000000"/>
+            <wall end="150:-300" id="{741154ff-3e04-4a26-8db0-4467a1828861}" stroke="#ff000000" begin="150:-150" stroke-style="none" stroke-width="10" fill="#ff000000"/>
+            <wall end="150:0" id="{37284188-b53e-4438-a1ec-a014106af620}" stroke="#ff000000" begin="300:0" stroke-style="none" stroke-width="10" fill="#ff000000"/>
+            <wall end="150:150" id="{8fa78d3f-5b5c-49f1-a972-cc91f607ec3c}" stroke="#ff000000" begin="150:0" stroke-style="none" stroke-width="10" fill="#ff000000"/>
+            <wall end="0:0" id="{1659d457-8110-4e4e-80ac-363a63765bfb}" stroke="#ff000000" begin="0:150" stroke-style="none" stroke-width="10" fill="#ff000000"/>
+            <wall end="-150:0" id="{0aa2fdc5-a55e-4f1d-9a6b-0bf09c9ace25}" stroke="#ff000000" begin="0:0" stroke-style="none" stroke-width="10" fill="#ff000000"/>
+            <wall end="-150:150" id="{00c36059-ddbb-433b-99fd-6433032eff33}" stroke="#ff000000" begin="-150:0" stroke-style="none" stroke-width="10" fill="#ff000000"/>
+            <wall end="0:150" id="{058da860-285a-43f4-819e-46278df246f9}" stroke="#ff000000" begin="-150:150" stroke-style="none" stroke-width="10" fill="#ff000000"/>
         </walls>
         <skittles/>
         <balls/>
@@ -15,7 +24,7 @@
         <regions/>
     </world>
     <robots>
-        <robot id="trikKitRobot" position="0:0" direction="0">
+        <robot id="trikKitRobot" position="42.4863:-105.154" direction="0">
             <sensors>
                 <sensor port="A5###input###А5###sensorA5" type="" position="0:0" direction="0"/>
                 <sensor port="A2###input###А2###sensorA2" type="trik::robotModel::parts::TrikInfraredSensor" position="44:1" direction="270"/>
@@ -25,7 +34,7 @@
                 <sensor port="D1###input######sensorD1" type="trik::robotModel::parts::TrikSonarSensor" position="59:24" direction="0"/>
                 <sensor port="A6###input###А6###sensorA6" type="" position="0:0" direction="0"/>
             </sensors>
-            <startPosition id="{fcbbcc54-5a2c-41cb-a2dc-6101a672f209}" y="25" x="25" direction="0"/>
+            <startPosition id="{fcbbcc54-5a2c-41cb-a2dc-6101a672f209}" y="-74.8428" x="-76.9671" direction="0"/>
             <wheels right="M3###output###М3###" left="M4###output###М4###"/>
         </robot>
     </robots>
