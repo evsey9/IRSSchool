@@ -26,17 +26,19 @@ function cm2cpr(cm) {
 	return (cm / (pi * robot.d)) * robot.cpr
 }
 
+function motors(vl, vr){
+	mL(vl == undefined ? robot.v : vl)
+	mR(vr == undefined ? robot.v : vr)
+}
 function moveStraight(cm){
 	print('Moving for ' + cm + ' cm')
 	eLeft.reset()
 	path = cm2cpr(cm)
-	mL(robot.v)
-	mR(robot.v)
+	motors()
 	while (eL() < path){
 		wait(10)
 	}
-	mL(0)
-	mR(0)
+	motors(0,0)
 }
 var main = function () {
 	__interpretation_started_timestamp__ = Date.now()
