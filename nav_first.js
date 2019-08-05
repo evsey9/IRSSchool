@@ -32,8 +32,7 @@ function motors(vl, vr){
 }
 function moveStraight(cm){
 	print('Moving for ' + cm + ' cm')
-	eLeft.reset()
-	path = cm2cpr(cm)
+	path = cm2cpr(cm) + eL()
 	motors()
 	while (eL() < path){
 		wait(10)
