@@ -93,6 +93,8 @@ var main = function () {
 	turnRight(90)
 	turnLeft(90)
 	moveBackwards(52.5)
+	placeTurnRight()
+	placeTurnLeft()
 	return
 }
 
