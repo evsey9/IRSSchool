@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+    <world>
+        <background/>
+        <walls/>
+        <skittles/>
+        <balls/>
+        <colorFields/>
+        <images/>
+        <regions/>
+    </world>
+    <robots>
+        <robot id="trikKitRobot" direction="0" position="0:0">
+            <sensors>
+                <sensor port="A5###input###А5###sensorA5" type="" direction="0" position="0:0"/>
+                <sensor port="A6###input###А6###sensorA6" type="" direction="0" position="0:0"/>
+                <sensor port="A3###input###А3###sensorA3" type="" direction="0" position="0:0"/>
+                <sensor port="A4###input###А4###sensorA4" type="" direction="0" position="0:0"/>
+                <sensor port="A1###input###А1###sensorA1" type="trik::robotModel::parts::TrikInfraredSensor" direction="90" position="45:50"/>
+                <sensor port="A2###input###А2###sensorA2" type="trik::robotModel::parts::TrikInfraredSensor" direction="270" position="45:0"/>
+                <sensor port="D1###input######sensorD1" type="trik::robotModel::parts::TrikSonarSensor" direction="0" position="60:25"/>
+            </sensors>
+            <startPosition id="{a9a74d24-b64b-403c-a483-929eb301a99c}" direction="0" x="25" y="25"/>
+            <wheels left="M4###output###М4###" right="M3###output###М3###"/>
+        </robot>
+    </robots>
+</root>
