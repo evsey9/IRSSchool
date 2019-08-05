@@ -31,6 +31,8 @@ function motors(vl, vr) {
 	mR(vr == undefined ? robot.v : vr)
 }
 
+//base functions. Try not to use in main code
+
 function turnRight(angle) {
 	path = eL() + (robot.track * angle) / (robot.d * 360) * robot.cpr
 	motors(40, -40)
@@ -68,6 +70,22 @@ function moveStraight(cm) {
 	}
 	motors(0, 0)
 }
+
+//Main code functions
+
+function placeTurnRight() {
+	moveStraight(robot.track / 2)
+	turnRight(90)
+	moveBackwards(robot.track / 2)
+}
+
+function placeTurnLeft() {
+	moveStraight(robot.track / 2)
+	turnLeft(90)
+	moveBackwards(robot.track / 2)
+}
+
+//Main program. Keep at end of file
 
 var main = function () {
 	__interpretation_started_timestamp__ = Date.now()
