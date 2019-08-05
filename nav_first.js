@@ -57,13 +57,14 @@ function moveBackwards(cm){
 
 function moveStraight(cm){
 	print('Moving for ' + cm + ' cm')
-	var path = cm2cpr(cm) + eL()
+	var path = eL() + cm2cpr(cm)
 	motors()
 	while (eL() < path){
 		wait(10)
 	}
-	motors(0,0)
+	motors(0, 0)
 }
+
 var main = function () {
 	__interpretation_started_timestamp__ = Date.now()
 	moveStraight(52.5)
