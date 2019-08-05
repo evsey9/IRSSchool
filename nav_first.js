@@ -18,10 +18,12 @@ sR = brick.sensor('A2').read // сенсор справа (ИК)
 var eLeft = brick.encoder(E4);
 var eRight = brick.encoder(E3);
 
-sign = Math.sign
 abs = Math.abs
 wait = script.wait
 
+function sign(num) {
+	return num > 0 ? 1 : -1
+}
 
 function cm2cpr(cm) {
 	return (cm / (pi * robot.d)) * robot.cpr
