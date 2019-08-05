@@ -68,6 +68,9 @@ function moveStraight(cm){
 var main = function () {
 	__interpretation_started_timestamp__ = Date.now()
 	moveStraight(52.5)
+	turnRight(90)
+	turnLeft(90)
+	moveBackwards(52.5)
 	return
 }
 
