@@ -139,12 +139,26 @@ function moveCells(cells) {
 	moveSmooth(cells * cellSize)
 }
 
+function reg_move() {
+	var kP = 2.0
+	var kD = 1.0
+	var error = 0
+	var lastEror = 0
+	var regSpeed = 40
+	motors(regSpeed, regSpeed)
+	var ndist = sR()
+	while (true) {
+		var error = (sR() - ndist) * kP
+		motors(regSpeed + error, regSpeed - error)
+		wait(10)
+	}
+}
 //Main program. Keep at end of file
 
 var main = function () {
 	__interpretation_started_timestamp__ = Date.now()
-	brick.gyroscope().calibrate(5000) //5000 in simulator, 14000 in real
-	wait(6000)
+	//brick.gyroscope().calibrate(5000) //5000 in simulator, 14000 in real
+	//wait(6000)
 	/*turnGyro(-90)
 	wait(1000)
 	turnGyro(90)
@@ -158,6 +172,7 @@ var main = function () {
 	moveSmooth(52.5)
 	moveSmooth(-52.5)*/
 	print(sR())
+	reg_move()
 	motors()
 	while (sF() > 17.5) wait(10)
 	motors(0, 0)
