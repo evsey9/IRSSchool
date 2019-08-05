@@ -29,6 +29,10 @@ function cm2cpr(cm) {
 	return (cm / (pi * robot.d)) * robot.cpr
 }
 
+function getYaw() {
+	return readGyro()[6]
+}
+
 function motors(vl, vr) {
 	mL(vl == undefined ? robot.v : vl)
 	mR(vr == undefined ? robot.v : vr)
@@ -44,6 +48,23 @@ function turnEnc(angle) {
 	while (eN() < path) {
 		wait(10)
 	}
+	motors(0, 0)
+}
+
+function turnGyro(angle) {
+	if (abs(angle) < 200) angle *= 1000
+	var cyaw = getYaw()
+	var sgn = 1
+	var lb = cyaw - 180000
+	if (angle > lb && angle < cyaw)
+		sgn = -1
+	else if (lb < -180000) {
+		lb = abs(lb) - (abs(lb) - 180000) * 2
+		if (angle > lb) sgn = -1
+	}
+	motors(40 * sgn, -40 * sgn)
+	while (abs(angle - getYaw()) > 1000)
+		wait(10)
 	motors(0, 0)
 }
 
@@ -117,6 +138,12 @@ function placeTurnLeft() {
 
 var main = function () {
 	__interpretation_started_timestamp__ = Date.now()
+	brick.gyroscope().calibrate(5000) //5000 in simulator, 14000 in real
+	wait(6000)
+	turnGyro(-90)
+	wait(1000)
+	turnGyro(90)
+	wait(1000)
 	moveStraight(52.5)
 	turnEnc(90)
 	turnEnc(-90)
