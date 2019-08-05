@@ -108,6 +108,7 @@ function moveSmooth(cm, v) {
 		while (eL() < path) {
 			if (eL() < pathStart + startStop) vM += dV
 			if (eL() > pathStart + startStop * 3) vM -= dV
+			vM = Math.max(v0, vM)
 			motors(vM, vM)
 			wait(30)
 		}
@@ -115,6 +116,7 @@ function moveSmooth(cm, v) {
 		while (eL() > path) {
 			if (eL() > pathStart - startStop) vM += dV
 			if (eL() < pathStart - startStop * 3) vM -= dV
+			vM = Math.max(v0, vM)
 			motors(-vM, -vM)
 			wait(30)
 		}
@@ -140,16 +142,20 @@ function moveCells(cells) {
 }
 
 function reg_move() {
-	var kP = 2.0
-	var kD = 1.0
+	var kP = 5.0
+	var kD = 6.0
 	var error = 0
-	var lastEror = 0
+	var lastError = 0
 	var regSpeed = 40
 	motors(regSpeed, regSpeed)
 	var ndist = sR()
 	while (true) {
-		var error = (sR() - ndist) * kP
-		motors(regSpeed + error, regSpeed - error)
+		error = ndist - sR()
+		var P = error * kP
+		var D = (error - lastError) * kD
+		var PD = P + D
+		motors(regSpeed - PD, regSpeed + PD)
+		lastError = error
 		wait(10)
 	}
 }
@@ -171,7 +177,11 @@ var main = function () {
 	placeTurnLeft()
 	moveSmooth(52.5)
 	moveSmooth(-52.5)*/
-	print(sR())
+	//print(sR())
+	for(var i = 1; i < 4; i++) {
+		moveSmooth(105)
+		turnEnc(90)
+	}
 	reg_move()
 	motors()
 	while (sF() > 17.5) wait(10)
