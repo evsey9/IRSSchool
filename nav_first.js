@@ -58,12 +58,18 @@ function moveBackwards(cm) {
 }
 
 function moveStraight(cm) {
+	var sgn = sign(cm)
 	print('Moving for ' + cm + ' cm')
-	var path = eL() + cm2cpr(cm)
-	motors()
-	while (eL() < path) {
-		wait(10)
-	}
+	var path = eL() + cm2cpr(abs(cm)) * sgn
+	motors(robot.v * sgn, robot.v * sgn)
+	if (sgn == 1)
+		while (eL() < path) {
+			wait(10)
+		}
+	else
+		while (eL() > path) {
+			wait(10)
+		}
 	motors(0, 0)
 }
 
@@ -72,13 +78,13 @@ function moveStraight(cm) {
 function placeTurnRight() {
 	moveStraight(robot.track / 2)
 	turnEnc(90)
-	moveBackwards(robot.track / 2)
+	moveStraight(-robot.track / 2)
 }
 
 function placeTurnLeft() {
 	moveStraight(robot.track / 2)
 	turnEnc(-90)
-	moveBackwards(robot.track / 2)
+	moveStraight(-robot.track / 2)
 }
 
 //Main program. Keep at end of file
@@ -88,7 +94,7 @@ var main = function () {
 	moveStraight(52.5)
 	turnEnc(90)
 	turnEnc(-90)
-	moveBackwards(52.5)
+	moveStraight(-52.5)
 	placeTurnRight()
 	placeTurnLeft()
 	return
