@@ -24,7 +24,7 @@
         <regions/>
     </world>
     <robots>
-        <robot id="trikKitRobot" position="42.4863:-105.154" direction="0">
+        <robot id="trikKitRobot" position="43:-105" direction="0">
             <sensors>
                 <sensor port="A5###input###А5###sensorA5" type="" position="0:0" direction="0"/>
                 <sensor port="A2###input###А2###sensorA2" type="trik::robotModel::parts::TrikInfraredSensor" position="44:1" direction="270"/>
