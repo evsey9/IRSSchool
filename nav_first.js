@@ -6,14 +6,15 @@ robot = {
 	cpr: 360,
 	v: 80
 }
+cellSize = 52.5 //sim - 52.5, real - 60 (40 on NTI)
 var readGyro = brick.gyroscope().read
 mL = brick.motor('M4').setPower // левый мотор
 mR = brick.motor('M3').setPower // правый мотор
 eL = brick.encoder('E4').read // левый энкодер
 eR = brick.encoder('E3').read // правый энкодер
 sF = brick.sensor('D1').read // сенсор спереди (УЗ)
-sL = brick.sensor('A1').read // сенсор слева (ИК)
-sR = brick.sensor('A2').read // сенсор справа (ИК)
+sL = brick.sensor('A2').read // сенсор слева (ИК)
+sR = brick.sensor('A1').read // сенсор справа (ИК)
 
 var eLeft = brick.encoder(E4);
 var eRight = brick.encoder(E3);
@@ -134,13 +135,17 @@ function placeTurnLeft() {
 	moveStraight(-robot.track / 2)
 }
 
+function moveCells(cells) {
+	moveSmooth(cells * cellSize)
+}
+
 //Main program. Keep at end of file
 
 var main = function () {
 	__interpretation_started_timestamp__ = Date.now()
 	brick.gyroscope().calibrate(5000) //5000 in simulator, 14000 in real
 	wait(6000)
-	turnGyro(-90)
+	/*turnGyro(-90)
 	wait(1000)
 	turnGyro(90)
 	wait(1000)
@@ -151,7 +156,11 @@ var main = function () {
 	placeTurnRight()
 	placeTurnLeft()
 	moveSmooth(52.5)
-	moveSmooth(-52.5)
+	moveSmooth(-52.5)*/
+	print(sR())
+	motors()
+	while (sF() > 17.5) wait(10)
+	motors(0, 0)
 	return
 }
 
