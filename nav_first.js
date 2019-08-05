@@ -53,6 +53,10 @@ function moveBackwards(cm){
 	print('Moving back for ' + cm + ' cm')
 	var path = eL() - cm2cpr(cm)
 	motors(-robot.v, -robot.v)
+	while (eL() > path){
+		wait(10)
+	}
+	motors(0, 0)
 }
 
 function moveStraight(cm){
