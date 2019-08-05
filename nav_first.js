@@ -73,6 +73,32 @@ function moveStraight(cm) {
 	motors(0, 0)
 }
 
+function moveSmooth(cm, v) {
+	v = v == undefined ? robot.v : v
+	var sgn = sign(cm)
+	cm = abs(cm)
+	var pathStart = eL()
+	var path = pathStart + cm2cpr(cm) * sgn
+	var v0 = 30, vM = v0
+	var startStop = cm2cpr(cm) / 4
+	var dV = (v - v0) / 10
+	if (sgn == 1)
+		while (eL() < path) {
+			if (eL() < pathStart + startStop) vM += dV
+			if (eL() > pathStart + startStop * 3) vM -= dV
+			motors(vM, vM)
+			wait(30)
+		}
+	else if (sgn == -1)
+		while (eL() > path) {
+			if (eL() > pathStart - startStop) vM += dV
+			if (eL() < pathStart - startStop * 3) vM -= dV
+			motors(-vM, -vM)
+			wait(30)
+		}
+	motors(0, 0)
+}
+
 //Main code functions
 
 function placeTurnRight() {
@@ -97,6 +123,8 @@ var main = function () {
 	moveStraight(-52.5)
 	placeTurnRight()
 	placeTurnLeft()
+	moveSmooth(52.5)
+	moveSmooth(-52.5)
 	return
 }
 
