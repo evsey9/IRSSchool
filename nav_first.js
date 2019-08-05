@@ -27,6 +27,7 @@ function cm2cpr(cm) {
 }
 
 function moveStraight(cm){
+	print('Moving for ' + cm + ' cm')
 	eLeft.reset()
 	path = cm2cpr(cm)
 	mL(robot.v)
@@ -38,7 +39,9 @@ function moveStraight(cm){
 	mR(0)
 }
 var main = function () {
-	__interpretation_started_timestamp__ = Date.now();
+	__interpretation_started_timestamp__ = Date.now()
 	moveStraight(52.5)
-	return;
+	return
 }
+
+main()
