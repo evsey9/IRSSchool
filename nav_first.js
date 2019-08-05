@@ -25,8 +25,20 @@ wait = script.wait
 function cm2cpr(cm) {
 	return (cm / (pi * robot.d)) * robot.cpr
 }
+
+function moveStraight(cm){
+	eLeft.reset()
+	path = cm2cpr(cm)
+	mL(robot.v)
+	mR(robot.v)
+	while (eL() < path){
+		wait(10)
+	}
+	mL(0)
+	mR(0)
+}
 var main = function () {
 	__interpretation_started_timestamp__ = Date.now();
-
+	moveStraight(52.5)
 	return;
 }
