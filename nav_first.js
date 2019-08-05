@@ -30,6 +30,31 @@ function motors(vl, vr){
 	mL(vl == undefined ? robot.v : vl)
 	mR(vr == undefined ? robot.v : vr)
 }
+
+function turnRight(angle){
+	path = eL() + (robot.track * angle) / (robot.d * 360) * robot.cpr
+	motors(40, -40)
+	while(eL() < path){
+		wait(10)
+	}
+	motors(0,0)
+}
+
+function turnLeft(angle){
+	path = eL() - (robot.track * angle) / (robot.d * 360) * robot.cpr
+	motors(-40, 40)
+	while(eL() > path){
+		wait(10)
+	}
+	motors(0,0)
+}
+
+function moveBackwards(cm){
+	print('Moving back for ' + cm + ' cm')
+	var path = eL() - cm2cpr(cm)
+	motors(-robot.v, -robot.v)
+}
+
 function moveStraight(cm){
 	print('Moving for ' + cm + ' cm')
 	var path = cm2cpr(cm) + eL()
