@@ -5,7 +5,7 @@ robot = {
 	track: 17.5,
 	cpr: 360,
 	v: 80,
-	curAngle: 0,
+	curAngle: 1,
 	x: 0,
 	y: 0
 }
@@ -126,6 +126,62 @@ function dfs(start, end) {
 	return path
 }
 
+function getPath(start_cell, stop_cell, start_dir) {
+	way = bfs(start_cell, stop_cell)
+	var step
+	var az = start_dir
+	var moves = []
+	for (var i = 1; i < way.length; i++) {
+		step = way[i] - way[i - 1]
+		if (step == 4) {
+			if (az == 0) moves.push('LL')
+			if (az == 1) moves.push('R')
+			if (az == 2) {}
+			if (az == 3) moves.push('L')
+			az = 2
+		}
+		if (step == 1) {
+			if (az == 0) moves.push('R')
+			if (az == 1) {}
+			if (az == 2) moves.push('L')
+			if (az == 3) moves.push('LL')
+			az = 1
+		}
+		if (step == -4) {
+			if (az == 0) {}
+			if (az == 1) moves.push('L')
+			if (az == 2) moves.push('LL')
+			if (az == 3) moves.push('R')
+			az = 0
+		}
+		if (step == -1) {
+			if (az == 0) moves.push('L')
+			if (az == 1) moves.push('LL')
+			if (az == 2) moves.push('R')
+			if (az == 3) {}
+			az = 3
+		}
+		moves.push('F')
+	}
+	return moves
+}
+
+function goMoves(moves)	{
+	for (var i = 0; i < moves.length; i++) {
+		switch (moves[i]) {
+			case 'F':
+				moveCells(1)
+				break
+			case 'L':
+				placeTurnLeft()
+				break
+			case 'R':
+				placeTurnRight()
+				break
+		}
+	}
+}
+
 function cm2cpr(cm) {
 	return (cm / (pi * robot.d)) * robot.cpr
 }
@@ -168,7 +224,7 @@ function turnGyro(angle) {
 	while (abs(angle - getYaw()) > 1000)
 		wait(10)
 	motors(0, 0)
-	robot.curAngle = angle
+	//robot.curAngle = angle
 }
 
 function moveBackwards(cm) {
@@ -229,14 +285,16 @@ function moveSmooth(cm, v) {
 //Main code functions
 
 function placeTurnRight() {
+	robot.curAngle = robot.curAngle + 1 > 3 ? 0 : robot.curAngle + 1
 	moveStraight(robot.track / 2)
-	turnGyro(robot.curAngle + 90000)
+	turnGyro(robot.curAngle * 90000)
 	moveStraight(-robot.track / 2)
 }
 
 function placeTurnLeft() {
+	robot.curAngle = robot.curAngle - 1 < 0 ? 3 : robot.curAngle - 1
 	moveStraight(robot.track / 2)
-	turnGyro(robot.curAngle - 90000)
+	turnGyro(robot.curAngle * 90000)
 	moveStraight(-robot.track / 2)
 }
 
@@ -281,19 +339,15 @@ var main = function () {
 	moveSmooth(52.5)
 	moveSmooth(-52.5)*/
 	//print(sR())
-	for (var i = 1; i < 5; i++) {
-		moveSmooth(105)
-		placeTurnRight()
-	}
-	reg_move()
-	motors()
-	while (sF() > 17.5) wait(10)
-	motors(0, 0)
+	var cell_start = 1
+	var cell_end = 15
+	print(bfs(cell_start, cell_end))
+	print(dfs(cell_start, cell_end))
+	rob_path = getPath(cell_start, cell_end, robot.curAngle)
+	print(rob_path)
+	goMoves(rob_path)
+
 	return
 }
 
-//main()
-var cell_start = 1
-var cell_end = 15
-print(bfs(cell_start, cell_end))
-print(dfs(cell_start, cell_end))
+main()
