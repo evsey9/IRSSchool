@@ -26,8 +26,8 @@ abs = Math.abs
 wait = script.wait
 
 cellSize = 52.5 //sim - 52.5, real - 60 (40 on NTI)
-maze_x = 4
-maze_y = 4
+maze_width = 4
+maze_height = 4
 var mazeMatrix = [
 	[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -49,6 +49,81 @@ var mazeMatrix = [
 
 function sign(num) {
 	return num > 0 ? 1 : -1
+}
+
+function printArr(arr, delim) {
+	delim = delim == undefined ? ',' : delim
+	for (var i = 0; i < arr.length; i++) {
+		print(arr[i].join(delim))
+	}
+}
+
+function get_cell(x, y) {
+	return maze_width * y + x
+}
+
+function get_coord(cell) {
+	return [cell % maze_width, Math.floor(cell / maze_height)]
+}
+
+function bfs(start, end) {
+	var queue = [start]
+	var P
+	var path = []
+	var visited = []
+	for (var i = 0; i < mazeMatrix.length; i++) visited.push(false)
+	while (queue.length) {
+		P = queue.shift()
+		path.push(P)
+		if (P == end)
+			break
+		if (!visited[P]) {
+			visited[P] = true
+			for (var i = 0; i < mazeMatrix.length; i++) {
+				if (mazeMatrix[P][i] == 1 && !visited[i]) queue.push(i)
+			}
+		}
+	}
+	path = path.reverse()
+	var pathBack = [path.shift()]
+	for (var i = 0; i < path.length; i++) {
+		var lastP = pathBack.slice(-1)
+		if (mazeMatrix[lastP][path[i]] == 1)
+			pathBack.push(path[i])
+	}
+	path = pathBack.reverse()
+	return path
+}
+
+function dfs(start, end) {
+	var stack = [start]
+	var P
+	var path = [start]
+	var Q
+	var visited = []
+	for (var i = 0; i < mazeMatrix.length; i++) visited.push(false)
+	visited[start] = true
+	while (stack.length) {
+		P = stack[stack.length - 1]
+		if (P == end)
+			break
+		hasnotvisited = []
+		for (var i = 0; i < mazeMatrix.length; i++)
+			if (mazeMatrix[P][i] == 1 && !visited[i]) {
+				hasnotvisited.push(i)
+			}
+		if (hasnotvisited.length) {
+			Q = hasnotvisited[0]
+			visited[Q] = true
+			stack.push(Q)
+			path.push(Q)
+		}
+		else {
+			stack.pop()
+			path.pop()
+		}
+	}
+	return path
 }
 
 function cm2cpr(cm) {
@@ -217,4 +292,8 @@ var main = function () {
 	return
 }
 
-main()
+//main()
+var cell_start = 1
+var cell_end = 15
+print(bfs(cell_start, cell_end))
+print(dfs(cell_start, cell_end))
