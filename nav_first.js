@@ -5,9 +5,11 @@ robot = {
 	track: 17.5,
 	cpr: 360,
 	v: 80,
-	curAngle: 0
+	curAngle: 0,
+	x: 0,
+	y: 0
 }
-cellSize = 52.5 //sim - 52.5, real - 60 (40 on NTI)
+
 var readGyro = brick.gyroscope().read
 mL = brick.motor('M4').setPower // левый мотор
 mR = brick.motor('M3').setPower // правый мотор
@@ -23,6 +25,9 @@ var eRight = brick.encoder(E3);
 abs = Math.abs
 wait = script.wait
 
+cellSize = 52.5 //sim - 52.5, real - 60 (40 on NTI)
+maze_x = 4
+maze_y = 4
 var mazeMatrix = [
 	[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
