@@ -6,7 +6,8 @@ robot = {
 	cpr: 360,
 	v: 80,
 	curAngle: 1,
-	x: 0,
+	beginAngle: 90000,
+	x: 1,
 	y: 0
 }
 
@@ -168,6 +169,7 @@ function getPath(start_cell, stop_cell, start_dir) {
 
 function goMoves(moves)	{
 	for (var i = 0; i < moves.length; i++) {
+		displayCoords()
 		switch (moves[i]) {
 			case 'F':
 				moveCells(1)
@@ -210,6 +212,7 @@ function turnEnc(angle) {
 
 function turnGyro(angle) {
 	if (abs(angle) < 200) angle *= 1000
+	angle = angle - robot.beginAngle
 	if (angle > 180000) angle = (angle - (angle - 180000) * 2) * -1
 	var cyaw = getYaw()
 	var sgn = 1
@@ -282,6 +285,10 @@ function moveSmooth(cm, v) {
 	motors(0, 0)
 }
 
+function displayCoords() {
+	brick.display().addLabel("("+robot.x+";"+robot.y+")"+robot.curAngle,1,1) //вывод ответа
+	brick.display().redraw()
+}
 //Main code functions
 
 function placeTurnRight() {
@@ -300,6 +307,22 @@ function placeTurnLeft() {
 
 function moveCells(cells) {
 	moveSmooth(cells * cellSize)
+	switch (robot.curAngle) {
+		case 0:
+			robot.y -= 1 * cells
+			break
+		case 1:
+			robot.x += 1 * cells
+			break
+		case 2:
+			robot.y += 1 * cells
+			break
+		case 3:
+			robot.x -= 1 * cells
+			break
+	}
+
+
 }
 
 function reg_move() {
