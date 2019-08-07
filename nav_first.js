@@ -225,10 +225,10 @@ function turnGyro(angle) {
 	if (abs(angle) < 200) angle *= 1000
 	if (angle > 180000) angle = (angle - (angle - 180000) * 2) * -1
 	var cyaw = getYaw()
-	var sgn = -1
+	var sgn = trik ? 1 : -1
 	var lb = cyaw - 180000
 	if (angle > lb && angle < cyaw)
-		sgn = 1
+		sgn = trik ? -1 : 1
 	else if (lb < -180000) {
 		lb = abs(lb) - (abs(lb) - 180000) * 2
 		if (angle > lb) sgn = -1
