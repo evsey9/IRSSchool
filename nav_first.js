@@ -1,32 +1,38 @@
 var __interpretation_started_timestamp__;
 var pi = 3.141592653589793;
+var trik = false
 robot = {
-	d: 5.6,
-	track: 17.5,
-	cpr: 360,
+	d: trik ? 8.2 : 5.6,
+	track: trik ? 17.5 : 17.5,
+	cpr: trik ? 385 : 360,
 	v: 80,
 	curAngle: 1,
-	beginAngle: 90000,
 	x: 1,
 	y: 0
 }
-
+var gyroAngles = [
+	[0, 90, 180, -90],
+	[-90, 0, 90, 180],
+	[180, -90, 0, 90],
+	[90, 180, -90, 0]
+]
+var gyro = gyroAngles[robot.curAngle]
 var readGyro = brick.gyroscope().read
-mL = brick.motor('M4').setPower // левый мотор
-mR = brick.motor('M3').setPower // правый мотор
-eL = brick.encoder('E4').read // левый энкодер
-eR = brick.encoder('E3').read // правый энкодер
+mL = brick.motor('M3').setPower // левый мотор
+mR = brick.motor('M4').setPower // правый мотор
+eL = brick.encoder('E3').read // левый энкодер
+eR = brick.encoder('E4').read // правый энкодер
 sF = brick.sensor('D1').read // сенсор спереди (УЗ)
 sL = brick.sensor('A2').read // сенсор слева (ИК)
 sR = brick.sensor('A1').read // сенсор справа (ИК)
 
-var eLeft = brick.encoder(E4);
-var eRight = brick.encoder(E3);
+var eLeft = brick.encoder(E3);
+var eRight = brick.encoder(E4);
 
 abs = Math.abs
 wait = script.wait
 
-cellSize = 52.5 //sim - 52.5, real - 60 (40 on NTI)
+cellSize = trik ? 30 : 52.5 //sim - 52.5, real - 60 (40 on NTI)
 maze_width = 4
 maze_height = 4
 var mazeMatrix = [
@@ -212,7 +218,6 @@ function turnEnc(angle) {
 
 function turnGyro(angle) {
 	if (abs(angle) < 200) angle *= 1000
-	angle = angle - robot.beginAngle
 	if (angle > 180000) angle = (angle - (angle - 180000) * 2) * -1
 	var cyaw = getYaw()
 	var sgn = 1
@@ -227,7 +232,6 @@ function turnGyro(angle) {
 	while (abs(angle - getYaw()) > 1000)
 		wait(10)
 	motors(0, 0)
-	//robot.curAngle = angle
 }
 
 function moveBackwards(cm) {
@@ -294,14 +298,14 @@ function displayCoords() {
 function placeTurnRight() {
 	robot.curAngle = robot.curAngle + 1 > 3 ? 0 : robot.curAngle + 1
 	moveStraight(robot.track / 2)
-	turnGyro(robot.curAngle * 90000)
+	turnGyro(gyro[robot.curAngle])
 	moveStraight(-robot.track / 2)
 }
 
 function placeTurnLeft() {
 	robot.curAngle = robot.curAngle - 1 < 0 ? 3 : robot.curAngle - 1
 	moveStraight(robot.track / 2)
-	turnGyro(robot.curAngle * 90000)
+	turnGyro(gyro[robot.curAngle])
 	moveStraight(-robot.track / 2)
 }
 
