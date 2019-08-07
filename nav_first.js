@@ -1,14 +1,19 @@
 var __interpretation_started_timestamp__;
 var pi = 3.141592653589793;
 var trik = false
+if (script.readAll("trik.txt").length) {
+	trik = true
+}
 robot = {
 	d: trik ? 8.2 : 5.6,
-	track: trik ? 17.5 : 17.5,
+	track: trik ? 19 : 17.5,
 	cpr: trik ? 385 : 360,
 	v: 80,
 	curAngle: 1,
 	x: 1,
-	y: 0
+	y: 0,
+	calibration_time: trik ? 14000 : 5000,
+	calibration_values: trik ? [113, -172, 14, 12, -41, 4137] : undefined
 }
 var gyroAngles = [
 	[0, 90, 180, -90],
@@ -20,8 +25,8 @@ var gyro = gyroAngles[robot.curAngle]
 var readGyro = brick.gyroscope().read
 mL = brick.motor('M3').setPower // левый мотор
 mR = brick.motor('M4').setPower // правый мотор
-eL = brick.encoder('E3').read // левый энкодер
-eR = brick.encoder('E4').read // правый энкодер
+eL = trik ? -brick.encoder('E3').read : brick.encoder('E3').read // левый энкодер
+eR = trik ? -brick.encoder('E4').read : brick.encoder('E4').read // правый энкодер
 sF = brick.sensor('D1').read // сенсор спереди (УЗ)
 sL = brick.sensor('A2').read // сенсор слева (ИК)
 sR = brick.sensor('A1').read // сенсор справа (ИК)
@@ -272,6 +277,7 @@ function moveSmooth(cm, v) {
 	var dV = (v - v0) / 10
 	if (sgn == 1)
 		while (eL() < path) {
+			print(eL())
 			if (eL() < pathStart + startStop) vM += dV
 			if (eL() > pathStart + startStop * 3) vM -= dV
 			vM = Math.max(v0, vM)
@@ -297,16 +303,16 @@ function displayCoords() {
 
 function placeTurnRight() {
 	robot.curAngle = robot.curAngle + 1 > 3 ? 0 : robot.curAngle + 1
-	moveStraight(robot.track / 2)
+	if (!trik) moveStraight(robot.track / 2)
 	turnGyro(gyro[robot.curAngle])
-	moveStraight(-robot.track / 2)
+	if (!trik) moveStraight(-robot.track / 2)
 }
 
 function placeTurnLeft() {
 	robot.curAngle = robot.curAngle - 1 < 0 ? 3 : robot.curAngle - 1
-	moveStraight(robot.track / 2)
+	if (!trik) moveStraight(robot.track / 2)
 	turnGyro(gyro[robot.curAngle])
-	moveStraight(-robot.track / 2)
+	if (!trik) moveStraight(-robot.track / 2)
 }
 
 function moveCells(cells) {
@@ -351,8 +357,15 @@ function reg_move() {
 
 var main = function () {
 	__interpretation_started_timestamp__ = Date.now()
-	brick.gyroscope().calibrate(5000) //5000 in simulator, 14000 in real
-	wait(6000)
+	eLeft.reset()
+	eRight.reset()
+	if (trik) print("Running on TRIK")
+	else print("Running on simulator")
+	if (robot.calibration_values) brick.gyroscope().setCalibrationValues(robot.calibration_values)
+	else {
+		brick.gyroscope().calibrate(robot.calibration_time) //5000 in simulator, 14000 in real
+		wait(robot.calibration_time + 1000)
+	}
 	/*turnGyro(-90)
 	wait(1000)
 	turnGyro(90)
