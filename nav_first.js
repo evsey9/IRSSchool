@@ -400,5 +400,5 @@ var main = function () {
 
 	return
 }
-//moveSmooth(20)
-main()
+moveSmooth(200)
+//main()
