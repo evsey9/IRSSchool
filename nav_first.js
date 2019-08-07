@@ -275,13 +275,24 @@ function moveSmooth(cm, v) {
 		vM = v0
 	var startStop = cm2cpr(cm) / 4
 	var dV = (v - v0) / 10
+	//regulator values
+	var encd_kP = 1.0
+	var gyro_kP = 2.0
+	var encLst = eL()
+	var encRst = eR()
+	var gyrost = gyro[robot.curAngle]
+	var control = 0
+	var encdControl = 0
+	var gyroControl = 0
 	if (sgn == 1)
 		while (eL() < path) {
 			if (eL() < pathStart + startStop) vM += dV
 			if (eL() > pathStart + startStop * 3) vM -= dV
 			vM = Math.max(v0, vM)
-			print(vM)
-			motors(vM, vM)
+			encdControl = ((eL() - encLst) - (eR() - encRst)) * encd_kP
+			gyroControl = (gyrost - getYaw() / 1000) * gyro_kP
+			control = encdControl + gyroControl
+			motors(vM - control, vM + control)
 			wait(35)
 		}
 	else if (sgn == -1)
@@ -289,7 +300,6 @@ function moveSmooth(cm, v) {
 			if (eL() > pathStart - startStop) vM += dV
 			if (eL() < pathStart - startStop * 3) vM -= dV
 			vM = Math.max(v0, vM)
-			print(vM)
 			motors(-vM, -vM)
 			wait(35)
 		}
