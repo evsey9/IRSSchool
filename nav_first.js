@@ -31,8 +31,8 @@ sF = brick.sensor('D1').read // сенсор спереди (УЗ)
 sL = brick.sensor('A2').read // сенсор слева (ИК)
 sR = brick.sensor('A1').read // сенсор справа (ИК)
 
-var eLeft = brick.encoder(E3);
-var eRight = brick.encoder(E4);
+var eLeft = brick.encoder(E4);
+var eRight = brick.encoder(E3);
 
 abs = Math.abs
 wait = script.wait
