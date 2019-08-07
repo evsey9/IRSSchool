@@ -39,7 +39,7 @@ var eRight = brick.encoder(E3);
 abs = Math.abs
 wait = script.wait
 
-cellSize = trik ? 60 : 52.5 //sim - 52.5, real - 60 (40 on NTI)
+cellSize = trik ? 56 : 52.5 //sim - 52.5, real - 60 (40 on NTI)
 maze_width = 4
 maze_height = 4
 var mazeMatrix = [
@@ -247,15 +247,15 @@ function turnGyro(angle) {
 	if (abs(angle) < 200) angle *= 1000
 	if (angle > 180000) angle = (angle - (angle - 180000) * 2) * -1
 	var cyaw = getYaw()
-	var sgn = trik ? 1 : -1
+	var sgn = 1
 	var lb = cyaw - 180000
 	if (angle > lb && angle < cyaw)
-		sgn = trik ? -1 : 1
+		sgn = -1
 	else if (lb < -180000) {
 		lb = abs(lb) - (abs(lb) - 180000) * 2
 		if (angle > lb) sgn = -1
 	}
-	motors(40 * sgn, -40 * sgn)
+	motors(52 * sgn, -40 * sgn)
 	while (abs(angle - getYaw()) > 1000)
 		wait(10)
 	motors(0, 0)
