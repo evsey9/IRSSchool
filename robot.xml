@@ -3,19 +3,19 @@
     <world>
         <background/>
         <walls>
-            <wall stroke-width="10" stroke-style="none" fill="#ff000000" id="{42712d23-58de-41a4-be82-9dce83468cde}" end="300:-300" begin="-300:-300" stroke="#ff000000"/>
-            <wall stroke-width="10" stroke-style="none" fill="#ff000000" id="{bac50686-7670-41aa-8c0d-fe78a5a94721}" end="300:300" begin="300:-300" stroke="#ff000000"/>
-            <wall stroke-width="10" stroke-style="none" fill="#ff000000" id="{0a3a7f61-5918-425c-82b2-96d269c40196}" end="300:300" begin="-300:300" stroke="#ff000000"/>
-            <wall stroke-width="10" stroke-style="none" fill="#ff000000" id="{ef1bce9c-98c4-41ec-b64a-7bfa13ca77d1}" end="-300:-300" begin="-300:300" stroke="#ff000000"/>
-            <wall stroke-width="10" stroke-style="none" fill="#ff000000" id="{7f836692-4161-46e0-a8cd-4e6eac15af87}" end="-150:-150" begin="-150:-300" stroke="#ff000000"/>
-            <wall stroke-width="10" stroke-style="none" fill="#ff000000" id="{ef0cebfc-fadf-42e0-9933-d833bd4cf941}" end="150:-150" begin="0:-150" stroke="#ff000000"/>
-            <wall stroke-width="10" stroke-style="none" fill="#ff000000" id="{741154ff-3e04-4a26-8db0-4467a1828861}" end="150:-300" begin="150:-150" stroke="#ff000000"/>
-            <wall stroke-width="10" stroke-style="none" fill="#ff000000" id="{37284188-b53e-4438-a1ec-a014106af620}" end="150:0" begin="300:0" stroke="#ff000000"/>
-            <wall stroke-width="10" stroke-style="none" fill="#ff000000" id="{8fa78d3f-5b5c-49f1-a972-cc91f607ec3c}" end="150:150" begin="150:0" stroke="#ff000000"/>
-            <wall stroke-width="10" stroke-style="none" fill="#ff000000" id="{1659d457-8110-4e4e-80ac-363a63765bfb}" end="0:0" begin="0:150" stroke="#ff000000"/>
-            <wall stroke-width="10" stroke-style="none" fill="#ff000000" id="{0aa2fdc5-a55e-4f1d-9a6b-0bf09c9ace25}" end="-150:0" begin="0:0" stroke="#ff000000"/>
-            <wall stroke-width="10" stroke-style="none" fill="#ff000000" id="{00c36059-ddbb-433b-99fd-6433032eff33}" end="-150:150" begin="-150:0" stroke="#ff000000"/>
-            <wall stroke-width="10" stroke-style="none" fill="#ff000000" id="{058da860-285a-43f4-819e-46278df246f9}" end="0:150" begin="-150:150" stroke="#ff000000"/>
+            <wall stroke-width="10" begin="-300:-300" fill="#ff000000" end="300:-300" stroke="#ff000000" stroke-style="none" id="{42712d23-58de-41a4-be82-9dce83468cde}"/>
+            <wall stroke-width="10" begin="300:-300" fill="#ff000000" end="300:300" stroke="#ff000000" stroke-style="none" id="{bac50686-7670-41aa-8c0d-fe78a5a94721}"/>
+            <wall stroke-width="10" begin="-300:300" fill="#ff000000" end="300:300" stroke="#ff000000" stroke-style="none" id="{0a3a7f61-5918-425c-82b2-96d269c40196}"/>
+            <wall stroke-width="10" begin="-300:300" fill="#ff000000" end="-300:-300" stroke="#ff000000" stroke-style="none" id="{ef1bce9c-98c4-41ec-b64a-7bfa13ca77d1}"/>
+            <wall stroke-width="10" begin="-150:-300" fill="#ff000000" end="-150:-150" stroke="#ff000000" stroke-style="none" id="{7f836692-4161-46e0-a8cd-4e6eac15af87}"/>
+            <wall stroke-width="10" begin="0:-150" fill="#ff000000" end="150:-150" stroke="#ff000000" stroke-style="none" id="{ef0cebfc-fadf-42e0-9933-d833bd4cf941}"/>
+            <wall stroke-width="10" begin="150:-150" fill="#ff000000" end="150:-300" stroke="#ff000000" stroke-style="none" id="{741154ff-3e04-4a26-8db0-4467a1828861}"/>
+            <wall stroke-width="10" begin="300:0" fill="#ff000000" end="150:0" stroke="#ff000000" stroke-style="none" id="{37284188-b53e-4438-a1ec-a014106af620}"/>
+            <wall stroke-width="10" begin="150:0" fill="#ff000000" end="150:150" stroke="#ff000000" stroke-style="none" id="{8fa78d3f-5b5c-49f1-a972-cc91f607ec3c}"/>
+            <wall stroke-width="10" begin="0:150" fill="#ff000000" end="0:0" stroke="#ff000000" stroke-style="none" id="{1659d457-8110-4e4e-80ac-363a63765bfb}"/>
+            <wall stroke-width="10" begin="0:0" fill="#ff000000" end="-150:0" stroke="#ff000000" stroke-style="none" id="{0aa2fdc5-a55e-4f1d-9a6b-0bf09c9ace25}"/>
+            <wall stroke-width="10" begin="-150:0" fill="#ff000000" end="-150:150" stroke="#ff000000" stroke-style="none" id="{00c36059-ddbb-433b-99fd-6433032eff33}"/>
+            <wall stroke-width="10" begin="-150:150" fill="#ff000000" end="0:150" stroke="#ff000000" stroke-style="none" id="{058da860-285a-43f4-819e-46278df246f9}"/>
         </walls>
         <skittles/>
         <balls/>
@@ -24,18 +24,18 @@
         <regions/>
     </world>
     <robots>
-        <robot position="-98.7806:-249.607" id="trikKitRobot" direction="0">
+        <robot direction="0" position="-98.7806:-249.607" id="trikKitRobot">
             <sensors>
-                <sensor port="D1###input######sensorD1" type="trik::robotModel::parts::TrikSonarSensor" position="32:25" direction="0"/>
-                <sensor port="A6###input###А6###sensorA6" type="" position="0:0" direction="0"/>
-                <sensor port="A5###input###А5###sensorA5" type="" position="0:0" direction="0"/>
-                <sensor port="A4###input###А4###sensorA4" type="" position="0:0" direction="0"/>
-                <sensor port="A3###input###А3###sensorA3" type="" position="0:0" direction="0"/>
-                <sensor port="A2###input###А2###sensorA2" type="trik::robotModel::parts::TrikInfraredSensor" position="32:25" direction="270"/>
-                <sensor port="A1###input###А1###sensorA1" type="trik::robotModel::parts::TrikInfraredSensor" position="32:25" direction="90"/>
+                <sensor direction="0" port="A6###input###А6###sensorA6" position="0:0" type=""/>
+                <sensor direction="0" port="A5###input###А5###sensorA5" position="0:0" type=""/>
+                <sensor direction="0" port="D1###input######sensorD1" position="32:25" type="trik::robotModel::parts::TrikSonarSensor"/>
+                <sensor direction="0" port="A4###input###А4###sensorA4" position="0:0" type=""/>
+                <sensor direction="0" port="A3###input###А3###sensorA3" position="0:0" type=""/>
+                <sensor direction="270" port="A2###input###А2###sensorA2" position="32:25" type="trik::robotModel::parts::TrikInfraredSensor"/>
+                <sensor direction="90" port="A1###input###А1###sensorA1" position="32:25" type="trik::robotModel::parts::TrikInfraredSensor"/>
             </sensors>
-            <startPosition y="-223.014" x="-72.1874" id="{7915d960-24e6-4963-9191-9cfc80262cf3}" direction="0"/>
-            <wheels left="M3###output###М3###" right="M4###output###М4###"/>
+            <startPosition direction="0" x="-72.1874" y="-223.014" id="{18b1526e-2e6d-46f3-b4ae-a04739f46754}"/>
+            <wheels left="M4###output###М4###" right="M3###output###М3###"/>
         </robot>
     </robots>
 </root>
