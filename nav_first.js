@@ -131,8 +131,7 @@ function dfs(start, end) {
 			visited[Q] = true
 			stack.push(Q)
 			path.push(Q)
-		}
-		else {
+		} else {
 			stack.pop()
 			path.pop()
 		}
@@ -180,7 +179,7 @@ function getPath(start_cell, stop_cell, start_dir) {
 	return moves
 }
 
-function goMoves(moves)	{
+function goMoves(moves) {
 	for (var i = 0; i < moves.length; i++) {
 		displayCoords()
 		switch (moves[i]) {
@@ -202,6 +201,7 @@ function cm2cpr(cm) {
 }
 
 var yawdrift = 0
+
 function driftmeasure() { //662 mdeg per 5 seconds
 	print("yaw drift per 1 second: " + getYaw())
 	yawdrift += getYaw()
@@ -333,7 +333,7 @@ function moveSmooth(cm, v) {
 }
 
 function displayCoords() {
-	brick.display().addLabel("("+robot.x+";"+robot.y+")"+robot.curAngle,1,1) //вывод ответа
+	brick.display().addLabel("(" + robot.x + ";" + robot.y + ")" + robot.curAngle, 1, 1) //вывод ответа
 	brick.display().redraw()
 }
 //Main code functions
