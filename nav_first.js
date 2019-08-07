@@ -21,6 +21,7 @@ var gyroAngles = [
 	[180, -90, 0, 90],
 	[90, 180, -90, 0]
 ]
+var drift = 132
 var gyro = gyroAngles[robot.curAngle]
 var readGyro = brick.gyroscope().read
 mL = brick.motor('M4').setPower // левый мотор
@@ -33,6 +34,7 @@ sR = brick.sensor('A1').read // сенсор справа (ИК)
 
 var eLeft = brick.encoder(E4);
 var eRight = brick.encoder(E3);
+
 
 abs = Math.abs
 wait = script.wait
@@ -199,8 +201,26 @@ function cm2cpr(cm) {
 	return (cm / (pi * robot.d)) * robot.cpr
 }
 
+var yawdrift = 0
+function driftmeasure() { //662 mdeg per 5 seconds
+	print("yaw drift per 1 second: " + getYaw())
+	yawdrift += getYaw()
+	//script.exit()
+}
+
+function driftfix() {
+	yawdrift += -132
+}
+var drifttimer = script.timer(1000);
+drifttimer.timeout.connect(driftfix);
+
+
 function getYaw() {
-	return readGyro()[6]
+	yawValue = readGyro()[6] - yawdrift
+	if (yawValue > 180000) {
+		yawValue = -yawValue + (yawValue - 180000) * 2
+	}
+	return yawValue
 }
 
 function motors(vl, vr) {
@@ -276,11 +296,12 @@ function moveSmooth(cm, v) {
 	var startStop = cm2cpr(cm) / 4
 	var dV = (v - v0) / 10
 	//regulator values
-	var encd_kP = 1.0
-	var gyro_kP = 2.0
+	var encd_kP = 0
+	var gyro_kP = -2.5
 	var encLst = eL()
 	var encRst = eR()
 	var gyrost = gyro[robot.curAngle]
+	print("gyrost" + gyrost)
 	var control = 0
 	var encdControl = 0
 	var gyroControl = 0
@@ -291,6 +312,11 @@ function moveSmooth(cm, v) {
 			vM = Math.max(v0, vM)
 			encdControl = ((eL() - encLst) - (eR() - encRst)) * encd_kP
 			gyroControl = (gyrost - getYaw() / 1000) * gyro_kP
+			print("gyrocontrol" + gyroControl)
+			print("encdcontrol" + encdControl)
+			print("yaw " + getYaw() / 1000)
+			brick.display().addLabel(control, 1, 1)
+			brick.display().redraw()
 			control = encdControl + gyroControl
 			motors(vM - control, vM + control)
 			wait(35)
@@ -377,6 +403,8 @@ var main = function () {
 		brick.gyroscope().calibrate(robot.calibration_time) //5000 in simulator, 14000 in real
 		wait(robot.calibration_time + 1000)
 	}
+	//script.wait(100000)
+	moveSmooth(200)
 	/*turnGyro(-90)
 	wait(1000)
 	turnGyro(90)
@@ -400,5 +428,5 @@ var main = function () {
 
 	return
 }
-moveSmooth(200)
-//main()
+//moveSmooth(200)
+main()
