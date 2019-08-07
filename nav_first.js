@@ -296,7 +296,7 @@ function moveSmooth(cm, v) {
 	var startStop = cm2cpr(cm) / 4
 	var dV = (v - v0) / 10
 	//regulator values
-	var encd_kP = 0
+	var encd_kP = 0.0
 	var gyro_kP = -2.5
 	var encLst = eL()
 	var encRst = eR()
@@ -309,16 +309,17 @@ function moveSmooth(cm, v) {
 		while (eL() < path) {
 			if (eL() < pathStart + startStop) vM += dV
 			if (eL() > pathStart + startStop * 3) vM -= dV
-			vM = Math.max(v0, vM)
+			vM = Math.min(Math.max(v0, vM), robot.v)
 			encdControl = ((eL() - encLst) - (eR() - encRst)) * encd_kP
 			gyroControl = (gyrost - getYaw() / 1000) * gyro_kP
 			print("gyrocontrol" + gyroControl)
 			print("encdcontrol" + encdControl)
 			print("yaw " + getYaw() / 1000)
 			brick.display().addLabel(control, 1, 1)
-			brick.display().redraw()
 			control = encdControl + gyroControl
-			motors(vM - control, vM + control)
+			brick.display().addLabel("motor speeds: " + (vM - control) + " " + (vM + control) , 1, 20)
+			brick.display().redraw()
+			motors(Math.min(vM - control, 100), Math.min(vM + control, 100))
 			wait(35)
 		}
 	else if (sgn == -1)
@@ -404,7 +405,7 @@ var main = function () {
 		wait(robot.calibration_time + 1000)
 	}
 	//script.wait(100000)
-	moveSmooth(200)
+	//moveSmooth(200)
 	/*turnGyro(-90)
 	wait(1000)
 	turnGyro(90)
