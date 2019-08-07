@@ -39,7 +39,7 @@ var eRight = brick.encoder(E3);
 abs = Math.abs
 wait = script.wait
 
-cellSize = trik ? 30 : 52.5 //sim - 52.5, real - 60 (40 on NTI)
+cellSize = trik ? 60 : 52.5 //sim - 52.5, real - 60 (40 on NTI)
 maze_width = 4
 maze_height = 4
 var mazeMatrix = [
@@ -211,9 +211,11 @@ function driftmeasure() { //662 mdeg per 5 seconds
 function driftfix() {
 	yawdrift += -132
 }
-var drifttimer = script.timer(1000);
-drifttimer.timeout.connect(driftfix);
 
+if (trik) {
+	var drifttimer = script.timer(1000)
+	drifttimer.timeout.connect(driftfix)
+}
 
 function getYaw() {
 	yawValue = readGyro()[6] - yawdrift
