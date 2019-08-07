@@ -5,8 +5,8 @@ if (script.readAll("trik.txt").length) {
 	trik = true
 }
 robot = {
-	d: trik ? 8.2 : 5.6,
-	track: trik ? 19 : 17.5,
+	d: trik ? 8.5 : 5.6,
+	track: trik ? 17.3 : 17.5,
 	cpr: trik ? 385 : 360,
 	v: 80,
 	curAngle: 1,
@@ -277,20 +277,21 @@ function moveSmooth(cm, v) {
 	var dV = (v - v0) / 10
 	if (sgn == 1)
 		while (eL() < path) {
-			print(eL())
 			if (eL() < pathStart + startStop) vM += dV
 			if (eL() > pathStart + startStop * 3) vM -= dV
 			vM = Math.max(v0, vM)
+			print(vM)
 			motors(vM, vM)
-			wait(30)
+			wait(35)
 		}
 	else if (sgn == -1)
 		while (eL() > path) {
 			if (eL() > pathStart - startStop) vM += dV
 			if (eL() < pathStart - startStop * 3) vM -= dV
 			vM = Math.max(v0, vM)
+			print(vM)
 			motors(-vM, -vM)
-			wait(30)
+			wait(35)
 		}
 	motors(0, 0)
 }
@@ -389,5 +390,5 @@ var main = function () {
 
 	return
 }
-
+//moveSmooth(20)
 main()
