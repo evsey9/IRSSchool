@@ -23,10 +23,10 @@ var gyroAngles = [
 ]
 var gyro = gyroAngles[robot.curAngle]
 var readGyro = brick.gyroscope().read
-mL = brick.motor('M3').setPower // левый мотор
-mR = brick.motor('M4').setPower // правый мотор
-eL = brick.encoder('E3').read // левый энкодер
-eR = brick.encoder('E4').read // правый энкодер
+mL = brick.motor('M4').setPower // левый мотор
+mR = brick.motor('M3').setPower // правый мотор
+eL = brick.encoder('E4').read // левый энкодер
+eR = brick.encoder('E3').read // правый энкодер
 sF = brick.sensor('D1').read // сенсор спереди (УЗ)
 sL = brick.sensor('A2').read // сенсор слева (ИК)
 sR = brick.sensor('A1').read // сенсор справа (ИК)
