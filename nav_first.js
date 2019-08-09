@@ -621,6 +621,14 @@ function getYaw() {
 	return yawValue
 }
 
+function messages(){
+	if(mailbox.hasMessages()){
+		var msg = mailbox.receive()
+		brick.display().addLabel(msg,10,10)
+		brick.display().redraw()
+		script.wait(100)
+	}
+}
 function motors(vl, vr) {
 	mL(vl == undefined ? robot.v : vl)
 	mR(vr == undefined ? robot.v : vr)
@@ -854,11 +862,12 @@ var main = function () {
 	return
 }
 //moveSmooth(200)
-if (trik) {
-	mailbox.connect("192.168.77.1")
+if (trik) { //TRIK Ip: 10.240.23.12 in Innopolis
+	mailbox.connect("10.240.23.12")
 	print(mailbox.myHullNumber())
 	var drifttimer = script.timer(1000)
 	drifttimer.timeout.connect(driftfix)
-
+	var pager = script.timer(20)
+	pager.timeout.connect(messages)
 }
 main()
