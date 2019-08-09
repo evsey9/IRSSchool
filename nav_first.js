@@ -420,7 +420,7 @@ var gyroAngles = [
 	[180, -90, 0, 90],
 	[90, 180, -90, 0]
 ]
-const drift = 132
+const drift = 86
 var gyro = gyroAngles[robot.curAngle]
 var readGyro = brick.gyroscope().read
 mL = brick.motor('M4').setPower // левый мотор
@@ -438,7 +438,7 @@ var eRight = brick.encoder(E3);
 
 wait = script.wait
 
-cellSize = trik ? 60 : 52.5 //sim - 52.5, real - 60 (40 on NTI)
+cellSize = trik ? 56.5 : 52.5 //sim - 52.5, real - 60 (40 on NTI)
 maze_width = 4
 maze_height = 4
 var mazeMatrix = [
@@ -535,7 +535,7 @@ function getPath(start_cell, stop_cell, start_dir) {
 	for (var i = 1; i < way.length; i++) {
 		step = way[i] - way[i - 1]
 		if (step == 4) {
-			if (az == 0) moves.push('LL')
+			if (az == 0) { moves.push('L'); moves.push('L') }
 			if (az == 1) moves.push('R')
 			if (az == 2) {}
 			if (az == 3) moves.push('L')
@@ -545,19 +545,19 @@ function getPath(start_cell, stop_cell, start_dir) {
 			if (az == 0) moves.push('R')
 			if (az == 1) {}
 			if (az == 2) moves.push('L')
-			if (az == 3) moves.push('LL')
+			if (az == 3) { moves.push('L'); moves.push('L') }
 			az = 1
 		}
 		if (step == -4) {
 			if (az == 0) {}
 			if (az == 1) moves.push('L')
-			if (az == 2) moves.push('LL')
+			if (az == 2) { moves.push('L'); moves.push('L') }
 			if (az == 3) moves.push('R')
 			az = 0
 		}
 		if (step == -1) {
 			if (az == 0) moves.push('L')
-			if (az == 1) moves.push('LL')
+			if (az == 1) { moves.push('L'); moves.push('L') }
 			if (az == 2) moves.push('R')
 			if (az == 3) {}
 			az = 3
@@ -597,7 +597,7 @@ function driftmeasure() { //662 mdeg per 5 seconds
 }
 
 function driftfix() {
-	yawdrift += -132
+	yawdrift += -drift
 }
 
 if (trik) {
@@ -645,7 +645,7 @@ function turnGyro(angle) {
 	}
 	motors(52 * sgn, -40 * sgn)
 	while (abs(angle - getYaw()) > 1000)
-		wait(10)
+		wait(5)
 	motors(0, 0)
 }
 
@@ -818,10 +818,12 @@ var main = function () {
 	//print(sR())
 	var cell_start = 1
 	var cell_end = 8
+	//script.wait(10000)
 	print(bfs(cell_start, cell_end))
 	print(dfs(cell_start, cell_end))
 	var rob_path = getPath(cell_start, cell_end, robot.curAngle)
 	print(rob_path)
+
 	goMoves(rob_path)
 	var photo = getPhoto()
 	//script.writeToFile("photo.txt",photo)
@@ -832,7 +834,11 @@ var main = function () {
 	brick.display().redraw()
 	brick.display().addLabel("(" + nums[0] + ";" + nums[1] + ")" + nums[2], 1, 1)
 	brick.display().redraw()
-	rob_path = getPath(cell_end, get_cell(nums[1]), robot.curAngle)
+	rob_path = getPath(cell_end, get_cell(nums[0], nums[1]), robot.curAngle)
+	print(rob_path)
+	brick.display().addLabel(rob_path, 1, 1)
+	brick.display().redraw()
+	script.wait(5000)
 	goMoves(rob_path)
 	script.wait(5000)
 	return
