@@ -438,7 +438,7 @@ var eRight = brick.encoder(E3);
 
 wait = script.wait
 
-cellSize = trik ? 56 : 52.5 //sim - 52.5, real - 60 (40 on NTI)
+cellSize = trik ? 60 : 52.5 //sim - 52.5, real - 60 (40 on NTI)
 maze_width = 4
 maze_height = 4
 var mazeMatrix = [
@@ -700,15 +700,22 @@ function moveSmooth(cm, v) {
 			if (eL() < pathStart + startStop) vM += dV
 			if (eL() > pathStart + startStop * 3) vM -= dV
 			vM = Math.min(Math.max(v0, vM), robot.v)
-			encdControl = ((eL() - encLst) - (eR() - encRst)) * encd_kP
-			gyroControl = (gyrost - getYaw() / 1000) * gyro_kP
-			print("gyrocontrol" + gyroControl)
-			print("encdcontrol" + encdControl)
-			print("yaw " + getYaw() / 1000)
-			brick.display().addLabel(control, 1, 1)
+			if (gyrost != 180) {
+				encdControl = ((eL() - encLst) - (eR() - encRst)) * encd_kP
+				gyroControl = (gyrost - getYaw() / 1000) * gyro_kP
+			}
+			else {
+				var cur_yaw = getYaw()
+				encdControl = ((eL() - encLst) - (eR() - encRst)) * encd_kP
+				gyroControl = (gyrost - abs(cur_yaw) / 1000) * gyro_kP * sign(cur_yaw)
+			}
+			//print("gyrocontrol" + gyroControl)
+			//print("encdcontrol" + encdControl)
+			//print("yaw " + getYaw() / 1000)
+			//brick.display().addLabel(control, 1, 1)
 			control = encdControl + gyroControl
-			brick.display().addLabel("motor speeds: " + (vM - control) + " " + (vM + control) , 1, 20)
-			brick.display().redraw()
+			//brick.display().addLabel("motor speeds: " + (vM - control) + " " + (vM + control) , 1, 20)
+			//brick.display().redraw()
 			motors(Math.min(vM - control, 100), Math.min(vM + control, 100))
 			wait(35)
 		}
